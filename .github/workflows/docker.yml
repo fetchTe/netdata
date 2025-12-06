@@ -218,7 +218,6 @@ jobs:
 
   publish-ghcr:
     name: Publish to GitHub Container Registry
-    if: github.event_name == 'workflow_dispatch'
     needs:
       - build-images
       - gen-tags
@@ -257,7 +256,7 @@ jobs:
           cache-from: type=local,src=/tmp/build-cache
           build-args: |
             OFFICIAL_IMAGE=${{ env.OFFICIAL_IMAGE }}
-            BUILD_VERSION=${{ github.event.inputs.version }}
+            BUILD_VERSION=${{ github.event.inputs.version || 'latest' }}
             BUILD_DATE=${{ github.event.repository.updated_at }}
-          tags: ghcr.io/${{ github.repository_owner }}/netdata:${{ github.event.inputs.version }}
+          tags: ghcr.io/${{ github.repository_owner }}/netdata:${{ github.event.inputs.version || 'latest' }}
           push: true
