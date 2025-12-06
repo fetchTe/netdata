@@ -208,7 +208,11 @@ jobs:
       - name: Generate Tags
         id: tag
         run: |
-          .github/scripts/gen-docker-tags.py ${{ github.event_name }} ${{ github.event.inputs.version }}
+          if [ ${{ github.event_name }} = 'workflow_dispatch' ]; then
+            .github/scripts/gen-docker-tags.py ${{ github.event_name }} ${{ github.event.inputs.version }}
+          else
+            .github/scripts/gen-docker-tags.py ${{ github.event_name }} ''
+          fi
 
   publish-ghcr:
     name: Publish to GitHub Container Registry
