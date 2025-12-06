@@ -244,7 +244,7 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
+          username: fetchte
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and Push Image
         id: build
@@ -256,5 +256,5 @@ jobs:
             OFFICIAL_IMAGE=${{ env.OFFICIAL_IMAGE }}
             BUILD_VERSION=${{ github.event.inputs.version || 'latest' }}
             BUILD_DATE=${{ github.event.repository.updated_at }}
-          tags: ghcr.io/${{ github.repository_owner }}/netdata:${{ github.event.inputs.version || 'latest' }}
+          tags: ghcr.io/fetchte/netdata:${{ github.event.inputs.version || 'latest' }}
           push: true
